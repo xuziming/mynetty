@@ -70,8 +70,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     /**
-     * Creates a new instance with the specified logger name and with hex dump
-     * enabled.
+     * Creates a new instance with the specified logger name and with hex dump enabled.
      */
     public LoggingHandler(Class<?> clazz) {
         this(clazz, DEFAULT_LEVEL);
@@ -135,8 +134,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void channelRegistered(ChannelHandlerContext ctx)
-            throws Exception {
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "REGISTERED"));
         }
@@ -144,8 +142,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void channelUnregistered(ChannelHandlerContext ctx)
-            throws Exception {
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "UNREGISTERED"));
         }
@@ -153,8 +150,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx)
-            throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "ACTIVE"));
         }
@@ -162,8 +158,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx)
-            throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "INACTIVE"));
         }
@@ -171,8 +166,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx,
-            Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "EXCEPTION: " + cause), cause);
         }
@@ -180,8 +174,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext ctx,
-            Object evt) throws Exception {
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "USER_EVENT: " + evt));
         }
@@ -189,18 +182,16 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void bind(ChannelHandlerContext ctx,
-            SocketAddress localAddress, ChannelPromise promise) throws Exception {
+    public void bind(ChannelHandlerContext ctx, SocketAddress address, ChannelPromise promise) throws Exception {
         if (logger.isEnabled(internalLevel)) {
-            logger.log(internalLevel, format(ctx, "BIND(" + localAddress + ')'));
+            logger.log(internalLevel, format(ctx, "BIND(" + address + ')'));
         }
-        super.bind(ctx, localAddress, promise);
+        super.bind(ctx, address, promise);
     }
 
     @Override
-    public void connect(ChannelHandlerContext ctx,
-            SocketAddress remoteAddress, SocketAddress localAddress,
-            ChannelPromise promise) throws Exception {
+    public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, 
+    	SocketAddress localAddress, ChannelPromise promise) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "CONNECT(" + remoteAddress + ", " + localAddress + ')'));
         }
@@ -208,8 +199,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void disconnect(ChannelHandlerContext ctx,
-            ChannelPromise promise) throws Exception {
+    public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "DISCONNECT()"));
         }
@@ -217,8 +207,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void close(ChannelHandlerContext ctx,
-            ChannelPromise promise) throws Exception {
+    public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "CLOSE()"));
         }
@@ -226,8 +215,7 @@ public class LoggingHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void deregister(ChannelHandlerContext ctx,
-             ChannelPromise promise) throws Exception {
+    public void deregister(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
         if (logger.isEnabled(internalLevel)) {
             logger.log(internalLevel, format(ctx, "DEREGISTER()"));
         }
@@ -316,12 +304,17 @@ public class LoggingHandler extends ChannelDuplexHandler {
             StringBuilder buf = new StringBuilder(
                     eventName.length() + 2 + msgStr.length() + 2 + 10 + 1 + 2 + rows * 80);
 
-            buf.append(eventName).append(": ")
-               .append(msgStr).append(", ").append(length).append('B').append(NEWLINE);
+            buf.append(eventName)
+               .append(": ")
+               .append(msgStr)
+               .append(", ")
+               .append(length)
+               .append('B')
+               .append(NEWLINE);
             appendPrettyHexDump(buf, content);
 
             return buf.toString();
         }
     }
-}
 
+}
